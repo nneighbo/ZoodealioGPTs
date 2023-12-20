@@ -71,25 +71,25 @@ export default function App() {
     setRecentComment(userInput)
     setUserInput('')
     setLoading(true)
-    // try {
-    //   const response = await axios({
-    //     method: 'post',
-    //     url: 'api/openai',
-    //     data: {
-    //       message: userInput,
-    //       threadID: threadID
-    //     }
-    //   })
-    //   setLoading(false)
-    //   setRecentComment('')
-    //   // setMessageHistory([...messageHistory, { role: 'user', content: userInput }, response.data])
-    //   console.log(response)
-    //   setThreadID(response.data.messages.data[0].thread_id)
-    //   setMessageHistory(response.data.messages.data.reverse())
-    // } catch (error) {
-    //   setLoading(false)
-    //   console.log(error)
-    // }
+    try {
+      const response = await axios({
+        method: 'post',
+        url: 'api/openai',
+        data: {
+          message: userInput,
+          threadID: threadID
+        }
+      })
+      setLoading(false)
+      setRecentComment('')
+      // setMessageHistory([...messageHistory, { role: 'user', content: userInput }, response.data])
+      console.log(response)
+      setThreadID(response.data.messages.data[0].thread_id)
+      setMessageHistory(response.data.messages.data.reverse())
+    } catch (error) {
+      setLoading(false)
+      console.log(error)
+    }
   }
 
   const timeConvert = (timestamp) => {
