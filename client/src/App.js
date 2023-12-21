@@ -114,7 +114,7 @@ export default function App() {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  const linkComp = ({ children, ...props }) => <a  target="_blank" {...props}>{children}</a>
+  const linkComp = ({ children, ...props }) => <a target="_blank" {...props}>{children}</a>
 
   useEffect(() => {
     scrollToBottom();
@@ -179,10 +179,10 @@ export default function App() {
                                     <div className="text-sm">
                                       {item.role === 'assistant' ?
                                         <a href='#' className="font-medium text-zoodealiogreen">
-                                          {item.role}
+                                          AI
                                         </a>
                                         : <a href='#' className="font-medium text-zoodealioblue">
-                                          {item.role}
+                                          You
                                         </a>}
                                     </div>
                                     <p className="mt-0.5 text-sm text-gray-500">{timeConvert(item.created_at).toString()}</p>
@@ -212,23 +212,8 @@ export default function App() {
                   })}
                   {recentComment ? <li>
                     <div className="relative pb-8">
-                      {/* {key !== messageHistory.length - 1 ? (
-                                         <span className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
-                                       ) : null} */}
                       <div className="relative flex items-start space-x-3">
-
                         <>
-                          <div className="relative">
-                            {/* <img
-                                                 className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
-                                                 src={activityItem.imageUrl}
-                                                 alt=""
-                                               /> */}
-                            {/*     
-                                               <span className="absolute -bottom-0.5 -right-1 rounded-tl bg-white px-0.5 py-px">
-                                                 <ChatBubbleLeftEllipsisIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                               </span> */}
-                          </div>
                           <div className="min-w-0 flex-1">
                             <div>
                               <div className="text-sm">
@@ -243,7 +228,6 @@ export default function App() {
                             </div>
                           </div>
                         </>
-
                       </div>
                     </div>
                   </li> :
@@ -251,23 +235,8 @@ export default function App() {
                   }
                   {loading ? <li>
                     <div className="relative pb-8">
-                      {/* {key !== messageHistory.length - 1 ? (
-                                         <span className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
-                                       ) : null} */}
                       <div className="relative flex items-start space-x-3">
-
                         <>
-                          <div className="relative">
-                            {/* <img
-                                                 className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
-                                                 src={activityItem.imageUrl}
-                                                 alt=""
-                                               /> */}
-                            {/*     
-                                               <span className="absolute -bottom-0.5 -right-1 rounded-tl bg-white px-0.5 py-px">
-                                                 <ChatBubbleLeftEllipsisIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                               </span> */}
-                          </div>
                           <div className="min-w-0 flex-1">
                             <div>
                               <div className="text-sm">
@@ -282,7 +251,6 @@ export default function App() {
                             </div>
                           </div>
                         </>
-
                       </div>
                     </div>
                   </li> :
@@ -321,10 +289,7 @@ export default function App() {
                             onChange={handleInput}
 
                           />}
-
-                        {/* Spacer element to match the height of the toolbar */}
                         <div className="py-2" aria-hidden="true">
-                          {/* Matches height of button in toolbar (1px border + 36px content height) */}
                           <div className="py-px">
                             <div className="h-9" />
                           </div>
@@ -430,7 +395,6 @@ export default function App() {
                 <input type="submit" className="hide" />
               </form>
               {/* end form */}
-
             </div>
           </main>
         </div>
