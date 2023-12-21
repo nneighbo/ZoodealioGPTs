@@ -74,7 +74,7 @@ export default function App() {
     try {
       const response = await axios({
         method: 'post',
-        url: 'api/openai',
+        url: 'api/openai/agent',
         data: {
           message: userInput,
           threadID: threadID
