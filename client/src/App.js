@@ -68,6 +68,7 @@ export default function App() {
   }
 
   const clickHandler = async (e) => {
+    e.preventDefault()
     setRecentComment(userInput)
     setUserInput('')
     setLoading(true)
@@ -113,6 +114,7 @@ export default function App() {
     endOfMessagesRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  const linkComp = ({ children, ...props }) => <a  target="_blank" {...props}>{children}</a>
 
   useEffect(() => {
     scrollToBottom();
@@ -125,7 +127,7 @@ export default function App() {
         <div className="py-10">
           <header>
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">Dashboard</h1>
+              <h1 className="text-3xl font-bold leading-tight tracking-tight text-gray-900">Chat</h1>
             </div>
           </header>
           <main>
@@ -133,41 +135,71 @@ export default function App() {
               {/* content  */}
               <div className="flow-root content scrollbox">
                 <ul role="list" className="-mb-8">
+                  <li>
+                    <div className="relative pb-8">
+
+                      <div className="relative flex items-start space-x-3">
+
+                        <>
+                          <div className="relative">
+
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <div>
+                              <div className="text-sm">
+                                <a href='#' className="font-medium text-zoodealiogreen">
+                                  AI
+                                </a>
+                              </div>
+                            </div>
+                            <div className="mt-2 text-sm text-gray-700">
+                              Ask Me a question!
+                            </div>
+                          </div>
+                        </>
+
+                      </div>
+                    </div>
+                  </li>
                   {messageHistory.map((item, key) => {
-                    console.log(item.content[0].text.value)
                     return (
                       (
 
                         <li key={key}>
                           <div className="relative pb-8">
-                            {/* {key !== messageHistory.length - 1 ? (
-                              <span className="absolute left-5 top-5 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
-                            ) : null} */}
+
                             <div className="relative flex items-start space-x-3">
 
                               <>
                                 <div className="relative">
-                                  {/* <img
-                                      className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-400 ring-8 ring-white"
-                                      src={activityItem.imageUrl}
-                                      alt=""
-                                    /> */}
-                                  {/*     
-                                    <span className="absolute -bottom-0.5 -right-1 rounded-tl bg-white px-0.5 py-px">
-                                      <ChatBubbleLeftEllipsisIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
-                                    </span> */}
+
                                 </div>
                                 <div className="min-w-0 flex-1">
                                   <div>
                                     <div className="text-sm">
-                                      <a href='#' className="font-medium text-gray-900">
-                                        {item.role === 'assistant' ? 'AI' : 'You'}
-                                      </a>
+                                      {item.role === 'assistant' ?
+                                        <a href='#' className="font-medium text-zoodealiogreen">
+                                          {item.role}
+                                        </a>
+                                        : <a href='#' className="font-medium text-zoodealioblue">
+                                          {item.role}
+                                        </a>}
                                     </div>
                                     <p className="mt-0.5 text-sm text-gray-500">{timeConvert(item.created_at).toString()}</p>
                                   </div>
                                   <div className="mt-2 text-sm text-gray-700">
-                                    <Markdown>{item.content[0].text.value}</Markdown>
+                                    <Markdown
+                                      options={{
+                                        overrides: {
+                                          a: {
+                                            component: linkComp,
+                                            props: {
+                                              className: 'text-zoodealioblue link',
+                                            },
+                                          },
+                                        },
+                                      }}
+                                    >{item.content[0].text.value}</Markdown>
                                   </div>
                                 </div>
                               </>
@@ -261,145 +293,142 @@ export default function App() {
               </div>
               {/* end content  */}
               {/* form */}
-              <div className="flex items-start space-x-4 content">
-                <div className="flex-shrink-0">
-                  <img
-                    className="inline-block h-10 w-10 rounded-full"
-                    src="https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
-                </div>
-                <div className="min-w-0 flex-1">
-                  <div className="relative">
-                    <div className="overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-indigo-300">
-                      <label htmlFor="comment" className="sr-only">
-                        Add your comment
-                      </label>
-                      {loading ?
-                        <input
-                          name="comment"
-                          id="comment"
-                          className="content block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                          placeholder="Add your comment..."
-                          onChange={handleInput}
-                          value={userInput}
-                          disabled
-                        />
-                        :
-                        <input
-                          name="comment"
-                          id="comment"
-                          className="content block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                          placeholder="Add your comment..."
-                          value={userInput}
-                          onChange={handleInput}
+              <form onSubmit={clickHandler}>
+                <div className="flex items-start space-x-4 content">
+                  <div className="min-w-0 flex-1">
+                    <div className="relative">
+                      <div className="overflow-hidden rounded-lg shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-zoodealioblue">
+                        <label htmlFor="comment" className="sr-only">
+                          Add your comment
+                        </label>
+                        {loading ?
+                          <input
+                            name="comment"
+                            id="comment"
+                            className="input content block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="Add your comment..."
+                            onChange={handleInput}
+                            value={userInput}
+                            disabled
+                          />
+                          :
+                          <input
+                            name="comment"
+                            id="comment"
+                            className="input content block w-full resize-none border-0 bg-transparent py-1.5 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                            placeholder="Add your comment..."
+                            value={userInput}
+                            onChange={handleInput}
 
-                        />}
+                          />}
 
-                      {/* Spacer element to match the height of the toolbar */}
-                      <div className="py-2" aria-hidden="true">
-                        {/* Matches height of button in toolbar (1px border + 36px content height) */}
-                        <div className="py-px">
-                          <div className="h-9" />
+                        {/* Spacer element to match the height of the toolbar */}
+                        <div className="py-2" aria-hidden="true">
+                          {/* Matches height of button in toolbar (1px border + 36px content height) */}
+                          <div className="py-px">
+                            <div className="h-9" />
+                          </div>
                         </div>
                       </div>
-                    </div>
 
-                    <div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
-                      <div className="flex items-center space-x-5">
-                        <div className="flex items-center">
-                          <button
-                            type="button"
-                            className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
-                          >
-                            <PaperClipIcon className="h-5 w-5" aria-hidden="true" />
-                            <span className="sr-only">Attach a file</span>
-                          </button>
-                        </div>
-                        <div className="flex items-center">
-                          <Listbox value={selected} onChange={setSelected}>
-                            {({ open }) => (
-                              <>
-                                <Listbox.Label className="sr-only">Your mood</Listbox.Label>
-                                <div className="relative">
-                                  <Listbox.Button className="relative -m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500">
-                                    <span className="flex items-center justify-center">
-                                      {selected.value === null ? (
-                                        <span>
-                                          <FaceSmileIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
-                                          <span className="sr-only">Add your mood</span>
-                                        </span>
-                                      ) : (
-                                        <span>
-                                          <span
-                                            className={classNames(
-                                              selected.bgColor,
-                                              'flex h-8 w-8 items-center justify-center rounded-full'
-                                            )}
-                                          >
-                                            <selected.icon className="h-5 w-5 flex-shrink-0 text-white" aria-hidden="true" />
+                      <div className="absolute inset-x-0 bottom-0 flex justify-between py-2 pl-3 pr-2">
+                        <div className="flex items-center space-x-5">
+                          <div className="flex items-center">
+                            <button
+                              type="button"
+                              className="-m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500"
+                            >
+                              <PaperClipIcon className="h-5 w-5" aria-hidden="true" />
+                              <span className="sr-only">Attach a file</span>
+                            </button>
+                          </div>
+                          <div className="flex items-center">
+                            <Listbox value={selected} onChange={setSelected}>
+                              {({ open }) => (
+                                <>
+                                  <Listbox.Label className="sr-only">Your mood</Listbox.Label>
+                                  <div className="relative">
+                                    <Listbox.Button className="relative -m-2.5 flex h-10 w-10 items-center justify-center rounded-full text-gray-400 hover:text-gray-500">
+                                      <span className="flex items-center justify-center">
+                                        {selected.value === null ? (
+                                          <span>
+                                            <FaceSmileIcon className="h-5 w-5 flex-shrink-0" aria-hidden="true" />
+                                            <span className="sr-only">Add your mood</span>
                                           </span>
-                                          <span className="sr-only">{selected.name}</span>
-                                        </span>
-                                      )}
-                                    </span>
-                                  </Listbox.Button>
-
-                                  <Transition
-                                    show={open}
-                                    as={Fragment}
-                                    leave="transition ease-in duration-100"
-                                    leaveFrom="opacity-100"
-                                    leaveTo="opacity-0"
-                                  >
-                                    <Listbox.Options className="absolute z-10 -ml-6 mt-1 w-60 rounded-lg bg-white py-3 text-base shadow ring-1 ring-black ring-opacity-5 focus:outline-none sm:ml-auto sm:w-64 sm:text-sm">
-                                      {moods.map((mood) => (
-                                        <Listbox.Option
-                                          key={mood.value}
-                                          className={({ active }) =>
-                                            classNames(
-                                              active ? 'bg-gray-100' : 'bg-white',
-                                              'relative cursor-default select-none px-3 py-2'
-                                            )
-                                          }
-                                          value={mood}
-                                        >
-                                          <div className="flex items-center">
-                                            <div
+                                        ) : (
+                                          <span>
+                                            <span
                                               className={classNames(
-                                                mood.bgColor,
+                                                selected.bgColor,
                                                 'flex h-8 w-8 items-center justify-center rounded-full'
                                               )}
                                             >
-                                              <mood.icon
-                                                className={classNames(mood.iconColor, 'h-5 w-5 flex-shrink-0')}
-                                                aria-hidden="true"
-                                              />
+                                              <selected.icon className="h-5 w-5 flex-shrink-0 text-white" aria-hidden="true" />
+                                            </span>
+                                            <span className="sr-only">{selected.name}</span>
+                                          </span>
+                                        )}
+                                      </span>
+                                    </Listbox.Button>
+
+                                    <Transition
+                                      show={open}
+                                      as={Fragment}
+                                      leave="transition ease-in duration-100"
+                                      leaveFrom="opacity-100"
+                                      leaveTo="opacity-0"
+                                    >
+                                      <Listbox.Options className="absolute z-10 -ml-6 mt-1 w-60 rounded-lg bg-white py-3 text-base shadow ring-1 ring-black ring-opacity-5 focus:outline-none sm:ml-auto sm:w-64 sm:text-sm">
+                                        {moods.map((mood) => (
+                                          <Listbox.Option
+                                            key={mood.value}
+                                            className={({ active }) =>
+                                              classNames(
+                                                active ? 'bg-gray-100' : 'bg-white',
+                                                'relative cursor-default select-none px-3 py-2'
+                                              )
+                                            }
+                                            value={mood}
+                                          >
+                                            <div className="flex items-center">
+                                              <div
+                                                className={classNames(
+                                                  mood.bgColor,
+                                                  'flex h-8 w-8 items-center justify-center rounded-full'
+                                                )}
+                                              >
+                                                <mood.icon
+                                                  className={classNames(mood.iconColor, 'h-5 w-5 flex-shrink-0')}
+                                                  aria-hidden="true"
+                                                />
+                                              </div>
+                                              <span className="ml-3 block truncate font-medium">{mood.name}</span>
                                             </div>
-                                            <span className="ml-3 block truncate font-medium">{mood.name}</span>
-                                          </div>
-                                        </Listbox.Option>
-                                      ))}
-                                    </Listbox.Options>
-                                  </Transition>
-                                </div>
-                              </>
-                            )}
-                          </Listbox>
+                                          </Listbox.Option>
+                                        ))}
+                                      </Listbox.Options>
+                                    </Transition>
+                                  </div>
+                                </>
+                              )}
+                            </Listbox>
+                          </div>
                         </div>
-                      </div>
-                      <div className="flex-shrink-0">
-                        <button
-                          onClick={clickHandler}
-                          className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        >
-                          Post
-                        </button>
+                        <div className="flex-shrink-0">
+                          <button
+                            onClick={clickHandler}
+                            className="inline-flex items-center rounded-md bg-zoodealioblue px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-zoodealioblue focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                          >
+                            Post
+                          </button>
+                        </div>
                       </div>
                     </div>
                   </div>
+
                 </div>
-              </div>
+                <input type="submit" className="hide" />
+              </form>
               {/* end form */}
 
             </div>
